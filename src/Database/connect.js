@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
-const connect_Url = "mongodb+srv://karancommunicate:ZwmLGOMGaoo5A496@cluster0.h2vqkas.mongodb.net/";
+import dotenv from "dotenv"
+dotenv.config();
+
+const connect_Url = process.env.MONGO_DB;
 
 mongoose.connect(connect_Url)
     .then(() => {
