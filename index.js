@@ -7,13 +7,13 @@ import dotenv from "dotenv"
 dotenv.config();
 
 // Database Connection
-const mongoConnect = process.env.MONGO_DB;
+const mongoConnect = process.env.MONGO_DB_URL;
 mongoose.connect(mongoConnect)
     .then(() => {
-        console.log("Connected to MongoDB Atlas!");
+        console.log("Database is Connected");
     })
     .catch((err) => {
-        console.error("Connection error: ", err);
+        console.error(" Database Connection error: ", err);
     });
 
 // Creating Server

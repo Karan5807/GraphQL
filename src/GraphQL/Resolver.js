@@ -1,10 +1,13 @@
 import AuthorModel from "../Database/Model/AuthorModel.js";
 import BookModel from "../Database/Model/BookModel.js";
 import ReviewModel from "../Database/Model/ReviewModel.js";
+import UserModel from "../Database/Model/UserModel.js";
 
 const resolvers = {
     // Query Function
     Query: {
+        users: async () => await UserModel.find({}),
+        userById: async (parent,args) => await UserModel.findById(args.id),
         books: async () => await BookModel.find({}),
         bookById: async (parent, args) => await BookModel.findById(args.id),
         reviews: async () => await ReviewModel.find({}),
@@ -15,6 +18,42 @@ const resolvers = {
 
     // Function for Mutation
     Mutation: {
+
+        // Section for Users
+        createUser: async (parent,args) => {
+            const {fullName,email,userId,password,verified,createdAt} = args;
+            const newUser = new UserModel({
+                fullName,
+                email,
+                userId,
+                password,
+                verified,
+                createdAt
+            });
+            await newUser.save();
+            return newUser;
+        },
+
+        // Update User
+        updateUser: async (parent, args) => {
+            const { userId } = args;
+            const updateUser = await BookModel.findByIdAndUpdate(userId, args);
+            if (!updateUser) {
+                console.error(`No Data is found with ${userId}`);
+            }
+            return updateUser;
+        },
+        // Delet User
+
+        deletUser: async (parent,args) =>{
+            const {userId} =args;
+            const deletUser = await UserModel.findByIdAndDelete(userId);
+            if(!deletUser){
+                console.error(`No Error found with this ${userId}`);
+            }
+            return deletUser;
+        }, 
+
 
         // Section for Books
         createBooks: async (parent, args) => {
