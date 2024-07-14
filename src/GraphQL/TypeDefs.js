@@ -26,6 +26,11 @@ type Reviews {
     rating: Int!
 }
 
+type AuthpayLoad {
+    token: String!
+    user: Users!
+}
+
 type Query {
     users:[Users]
     userById(userId:ID!):Users
